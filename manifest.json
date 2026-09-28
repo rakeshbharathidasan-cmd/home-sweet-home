@@ -1,0 +1,15 @@
+{
+  "id": "home-sweet-home-app",
+  "name": "Home Sweet Home",
+  "short_name": "Home Sweet Home",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#110e12",
+  "theme_color": "#110e12",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
