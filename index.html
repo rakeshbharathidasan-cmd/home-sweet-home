@@ -153,6 +153,24 @@ tr.grp td{font-weight:700;color:var(--text)}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .sync{font-size:11px;color:var(--faint)}
 .sync.err{color:var(--bad)}
+.pickbtn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;background:var(--s2);border:1px solid var(--line);border-radius:12px;padding:11px 12px;min-height:46px}
+.pickbtn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pickbtn .ph{color:var(--faint)}
+.pickbtn .fv{color:var(--peach);font-size:12px;margin-right:4px}
+.pkq{position:sticky;top:-18px;z-index:2;background:var(--s1);padding:2px 0 10px;margin-top:-4px}
+.pkq input{font-size:16px}
+.pkh{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin:12px 2px 6px}
+.pkr{display:grid;grid-template-columns:1fr 40px 40px;align-items:center;gap:2px;border-bottom:1px solid var(--line)}
+.pkr:last-child{border-bottom:0}
+.pkr .nm{text-align:left;padding:12px 4px;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pkr .nm.sel{color:var(--rose);font-weight:700}
+.pkr .nm small{color:var(--faint);font-size:11.5px;margin-left:6px}
+.pkr .ib{height:40px;border-radius:10px;font-size:19px;color:var(--faint);display:grid;place-items:center}
+.pkr .ib.fav{color:var(--peach)}
+.pkr .ib.del{font-size:15px}
+.pkr .ib.armed{background:rgba(255,138,138,.16);color:var(--bad);font-size:11px;font-weight:700;line-height:1.1}
+.pkadd{display:block;width:100%;text-align:left;padding:12px;margin-top:8px;border-radius:12px;border:1px dashed var(--line);color:var(--rose);font-weight:600}
+.pkhid{display:block;width:100%;text-align:left;color:var(--muted);font-size:13px;padding:12px 2px 4px}
 @media print{nav,header,.noprint{display:none!important} body{background:#fff;color:#000} .card{border-color:#ccc;background:#fff} td,th{border-color:#ddd;color:#000}}
 </style>
 </head>
@@ -328,8 +346,8 @@ function renderForm() {
     ${F.id ? `<div class="editbar"><span>Editing entry</span><button class="small" data-act="cancelEdit">Cancel</button></div>` : '<h3>Add expense</h3>'}
     <div class="seg"><button class="${F.kind==='general'?'on':''}" style="--k:var(--gen)" data-act="kind" data-k="general">General · recurring</button><button class="${F.kind==='special'?'on':''}" style="--k:var(--spc)" data-act="kind" data-k="special">Special · one-off</button></div>
     <div class="grid2">
-      <div><div class="fl">Who</div><select id="fPerson"><option value="">Select…</option>${people().map(p => opt(p, F.person)).join('')}<option value="__new">＋ Add new…</option></select></div>
-      <div><div class="fl">What</div><select id="fItem"><option value="">Select…</option>${it.mine.map(i => opt(i, F.item)).join('')}${it.other.length ? `<optgroup label="Others">${it.other.map(i => opt(i, F.item)).join('')}</optgroup>` : ''}<option value="__new">＋ Add new…</option></select></div>
+      <div><div class="fl">Who</div>${pickBtn('person', F.person)}</div>
+      <div><div class="fl">What</div>${pickBtn('item', F.item)}</div>
     </div>
     <div class="grid2">
       <div><div class="fl">Amount</div><div class="amt"><span>₹</span><input id="fAmt" inputmode="decimal" placeholder="0" value="${esc(F.amount)}"></div></div>
@@ -527,6 +545,69 @@ function readForm() {
 function sheet(h) { $('sheet').innerHTML = h; document.body.classList.add('open'); }
 function closeSheet() { document.body.classList.remove('open'); }
 let tt; function toast(m) { const t = $('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2400); }
+/* ---------- category picker: search, favourites, delete (hide) ---------- */
+// Favourites and hidden lists are kept on this phone. Hiding never touches past expenses; it only removes the name from the list.
+const PR = ls.get('prefs', {fav:{person:[], item:[]}, hidden:{person:[], item:[]}});
+const savePR = () => ls.set('prefs', PR);
+const isFav = (k, v) => PR.fav[k].includes(v), isHid = (k, v) => PR.hidden[k].includes(v);
+let PK = {kind:null, q:'', showHid:false};
+function pickBtn(kind, v){
+  const ph = kind === 'person' ? 'Select who…' : (F.person ? 'Select what…' : 'Choose who first');
+  return `<button class="pickbtn" type="button" data-act="pickopen" data-k="${kind}" id="${kind === 'person' ? 'fPerson' : 'fItem'}">${v ? `<span>${isFav(kind, v) ? '<span class="fv">★</span>' : ''}${esc(v)}</span>` : `<span class="ph">${ph}</span>`}<span class="faint">▾</span></button>`;
+}
+function pickPool(kind){
+  if (kind === 'person') return {groups:[['', people()]]};
+  const it = itemsFor(F.person);
+  return {groups:[[F.person ? `Used for ${F.person}` : '', it.mine], ['Others', it.other]]};
+}
+function pickRows(kind){
+  const q = PK.q.trim().toLowerCase(), cur = kind === 'person' ? F.person : F.item;
+  const match = v => !q || v.toLowerCase().includes(q);
+  const all = [...new Set(pickPool(kind).groups.flatMap(g => g[1]))];
+  const row = v => `<div class="pkr"><button class="nm${v === cur ? ' sel' : ''}" data-act="pkchoose" data-v="${esc(v)}">${esc(v)}${v === cur ? '<small>selected</small>' : ''}</button>
+    <button class="ib${isFav(kind, v) ? ' fav' : ''}" data-act="pkfav" data-v="${esc(v)}" aria-label="Favourite">${isFav(kind, v) ? '★' : '☆'}</button>
+    <button class="ib del" data-act="pkhide" data-v="${esc(v)}" aria-label="Delete from list">🗑</button></div>`;
+  let h = '';
+  const favs = PR.fav[kind].filter(v => all.includes(v) && !isHid(kind, v) && match(v));
+  if (favs.length) h += `<div class="pkh">★ Favourites</div>${favs.map(row).join('')}`;
+  pickPool(kind).groups.forEach(([label, list]) => {
+    const rest = list.filter(v => !isFav(kind, v) && !isHid(kind, v) && match(v));
+    if (rest.length) h += `${label || favs.length ? `<div class="pkh">${esc(label || 'All')}</div>` : ''}${rest.map(row).join('')}`;
+  });
+  const typed = PK.q.trim();
+  if (typed && !all.some(v => v.toLowerCase() === typed.toLowerCase())) h += `<button class="pkadd" data-act="pkadd">＋ Add “${esc(typed)}”</button>`;
+  else if (!h) h += `<div class="muted small" style="padding:10px 2px">Nothing here yet. Type a name above to add one.</div>`;
+  if (!typed && !h.includes('pkadd')) h += `<button class="pkadd" data-act="pkfocus">＋ Add new ${kind === 'person' ? 'person' : 'item'}</button>`;
+  const hid = PR.hidden[kind];
+  if (hid.length && !typed) {
+    h += `<button class="pkhid" data-act="pktoghid">${PK.showHid ? '▾' : '▸'} Deleted from list (${hid.length})</button>`;
+    if (PK.showHid) h += hid.map(v => `<div class="pkr"><span class="nm faint">${esc(v)}</span><span></span><button class="ib" data-act="pkunhide" data-v="${esc(v)}" aria-label="Restore" style="font-size:12px;color:var(--rose)">Undo</button></div>`).join('');
+  }
+  return h;
+}
+function openPicker(kind){
+  readForm();
+  if (kind === 'item' && !F.person) { toast('Choose who first'); return openPicker('person'); }
+  PK = {kind, q:'', showHid:false};
+  sheet(`<h3>${kind === 'person' ? 'Who' : `What${F.person ? ` · ${esc(F.person)}` : ''}`}</h3>
+    <div class="pkq"><input id="pkQ" placeholder="Search or type a new name" autocomplete="off" autocapitalize="words"></div>
+    <div id="pkList">${pickRows(kind)}</div>
+    <p class="small faint" style="margin:12px 2px 0">☆ pins it to the top. 🗑 removes it from this list only; past expenses keep their name. Both are saved on this phone.</p>`);
+}
+const pkRefresh = () => { const l = $('pkList'); if (l) l.innerHTML = pickRows(PK.kind); };
+function pkChoose(v){
+  const kind = PK.kind; F[kind] = v;
+  if (kind === 'person') { const it = itemsFor(F.person); if (!it.mine.concat(it.other).includes(F.item)) F.item = ''; }
+  ls.set('draft', F); closeSheet(); render();
+  if (kind === 'person' && !F.item) setTimeout(() => openPicker('item'), 280);
+}
+function addVal(kind, v) {
+  v = v.trim().slice(0, 30); if (!v) return null;
+  if (kind === 'person') S.extra.people.push(v);
+  if (kind === 'item') (S.extra.items[F.person] = S.extra.items[F.person] || []).push(v);
+  const h = PR.hidden[kind].indexOf(v); if (h >= 0) { PR.hidden[kind].splice(h, 1); savePR(); }
+  ls.set('extra', S.extra); return v;
+}
 function addNew(kind) {
   const label = {person:'Who is this for? (e.g. Rakesh, Baby, Home)', item:'What was it? (e.g. Rapido, Milk, Rent)', mode:'Payment mode name (e.g. Amazon Pay)'}[kind];
   const v = (prompt(label) || '').trim().slice(0, 30); if (!v) return null;
@@ -545,6 +626,24 @@ function csv(a, b) {
 }
 
 const A = {
+  pickopen: el => openPicker(el.dataset.k),
+  pkchoose: el => pkChoose(el.dataset.v),
+  pkfav: el => { const k = PK.kind, v = el.dataset.v, a = PR.fav[k], i = a.indexOf(v); if (i >= 0) a.splice(i, 1); else a.push(v); savePR(); pkRefresh(); toast(i >= 0 ? `${v} removed from favourites` : `★ ${v} pinned to the top`); },
+  pkhide: el => {
+    if (!el.classList.contains('armed')) { el.classList.add('armed'); el.textContent = 'Sure?'; setTimeout(() => { if (el.isConnected) { el.classList.remove('armed'); el.textContent = '🗑'; } }, 3000); return; }
+    const k = PK.kind, v = el.dataset.v;
+    if (!PR.hidden[k].includes(v)) PR.hidden[k].push(v);
+    PR.fav[k] = PR.fav[k].filter(x => x !== v);
+    if (k === 'person') S.extra.people = S.extra.people.filter(x => x !== v);
+    else Object.keys(S.extra.items).forEach(p => S.extra.items[p] = S.extra.items[p].filter(x => x !== v));
+    ls.set('extra', S.extra); savePR();
+    if (F[k] === v) { F[k] = ''; ls.set('draft', F); render(); }
+    pkRefresh(); toast(`${v} deleted from the list`);
+  },
+  pkunhide: el => { const k = PK.kind; PR.hidden[k] = PR.hidden[k].filter(x => x !== el.dataset.v); savePR(); pkRefresh(); toast(`${el.dataset.v} is back`); },
+  pktoghid: () => { PK.showHid = !PK.showHid; pkRefresh(); },
+  pkfocus: () => { const q = $('pkQ'); if (q) q.focus(); },
+  pkadd: () => { const v = addVal(PK.kind, PK.q); if (v) pkChoose(v); },
   tab: el => { readForm(); UI.tab = el.dataset.t; UI.slice = null; render(); scrollTo(0,0); },
   refresh: () => load(false).then(() => !S.err && toast('Up to date')),
   connect: async () => {
@@ -611,12 +710,12 @@ document.addEventListener('click', e => { const el = e.target.closest('[data-act
 document.addEventListener('change', e => {
   const id = e.target.id, v = e.target.value;
   const pick = (field, kind) => { readForm(); if (v === '__new') { const n = addNew(kind); if (n) F[field] = n; } else F[field] = v; if (field === 'person' && !itemsFor(F.person).mine.concat(itemsFor(F.person).other).includes(F.item)) F.item = ''; ls.set('draft', F); render(); };
-  if (id === 'fPerson') pick('person', 'person');
-  if (id === 'fItem') pick('item', 'item');
   if (id === 'fMode') pick('mode', 'mode');
   if (id === 'fDate') readForm();
 });
-document.addEventListener('input', e => { if (/^f(Amt|Note)$/.test(e.target.id)) readForm(); });
+document.addEventListener('input', e => { if (/^f(Amt|Note)$/.test(e.target.id)) readForm(); if (e.target.id === 'pkQ') { PK.q = e.target.value; pkRefresh(); } });
+document.addEventListener('keydown', e => { if (e.target.id === 'pkQ' && e.key === 'Enter') { e.preventDefault(); const first = document.querySelector('#pkList [data-act=pkchoose]'), typed = PK.q.trim();
+  if (typed && first) pkChoose(first.dataset.v); else if (typed) A.pkadd(); } });
 document.addEventListener('focusout', () => setTimeout(() => { if (dirtyWhileTyping && !typing()) { dirtyWhileTyping = false; readForm(); render(); } }, 50));
 document.addEventListener('visibilitychange', () => { if (!document.hidden) load(true); });
 setInterval(() => { if (!document.hidden) load(true); }, 20000);
