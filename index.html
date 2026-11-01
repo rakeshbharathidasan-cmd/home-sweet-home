@@ -171,6 +171,92 @@ tr.grp td{font-weight:700;color:var(--text)}
 .pkr .ib.armed{background:rgba(255,138,138,.16);color:var(--bad);font-size:11px;font-weight:700;line-height:1.1}
 .pkadd{display:block;width:100%;text-align:left;padding:12px;margin-top:8px;border-radius:12px;border:1px dashed var(--line);color:var(--rose);font-weight:600}
 .pkhid{display:block;width:100%;text-align:left;color:var(--muted);font-size:13px;padding:12px 2px 4px}
+/* ---------- motion ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(12px)}}
+@keyframes pgl{from{opacity:0;transform:translateX(-26px)}}
+@keyframes pgr{from{opacity:0;transform:translateX(26px)}}
+@keyframes pop{0%{transform:scale(.7);opacity:0}60%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fadein{from{opacity:0}}
+@keyframes grow{from{transform:scaleX(0)}}
+@keyframes growY{from{transform:scaleY(0)}}
+@keyframes sweep{from{stroke-dasharray:0 999}}
+@keyframes flash{0%{background:color-mix(in srgb,var(--rose) 35%,var(--s1));transform:scale(1.02)}100%{background:transparent;transform:none}}
+@keyframes out{to{opacity:0;transform:translateX(40px);height:0;padding:0;margin:0}}
+@keyframes shine{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+#view.anim>*{animation:rise .42s both}
+#view.anim>*:nth-child(2){animation-delay:40ms}#view.anim>*:nth-child(3){animation-delay:80ms}#view.anim>*:nth-child(4){animation-delay:120ms}#view.anim>*:nth-child(5){animation-delay:160ms}#view.anim>*:nth-child(6){animation-delay:200ms}#view.anim>*:nth-child(7){animation-delay:240ms}#view.anim>*:nth-child(n+8){animation-delay:280ms}
+#view.pl{animation:pgl .3s ease both}#view.pr{animation:pgr .3s ease both}
+.anim .tile{animation:pop .45s both}.anim .tile:nth-child(2){animation-delay:60ms}.anim .tile:nth-child(3){animation-delay:120ms}.anim .tile:nth-child(4){animation-delay:180ms}
+.anim .bars .tr i,.anim .bgt .tr i{transform-origin:left;animation:grow .8s cubic-bezier(.2,.9,.3,1) both}
+.anim .pie path{animation:pop .5s both;transform-origin:75px 75px}
+.anim .gy{transform-box:fill-box;transform-origin:50% 100%;animation:growY .6s cubic-bezier(.2,.9,.3,1) both}
+.anim .dl{stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 1.3s cubic-bezier(.3,.7,.2,1) .15s forwards}
+.ent.flash{animation:flash 1.2s ease-out}
+.ent.out{animation:out .3s ease forwards;overflow:hidden}
+.btn,.qc,.chip,.icon-btn,nav button{transition:transform .12s ease}
+.btn:active,.qc:active,.chip:active,.icon-btn:active{transform:scale(.95)}
+nav button{transition:color .25s}
+nav button.on svg{filter:drop-shadow(0 0 6px rgba(255,143,171,.6));animation:pop .3s}
+.toast{transition:opacity .22s,transform .22s cubic-bezier(.2,.9,.3,1.3)}
+/* ---------- budget / bills ---------- */
+.bgt{margin-bottom:12px}
+.bgt .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.bgt .top b{font-size:20px;font-variant-numeric:tabular-nums}
+.bgt .tr{height:12px;border-radius:99px;background:var(--s3);overflow:hidden;margin:8px 0 6px;position:relative}
+.bgt .tr i{display:block;height:100%;border-radius:99px;background:var(--c)}
+.bgt .tr .fc{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--text);opacity:.6;border-radius:2px}
+.bgt .row2{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);gap:8px}
+.bgt .ib{display:grid;grid-template-columns:96px 1fr 92px;gap:8px;align-items:center;font-size:12.5px;padding:5px 0}
+.bgt .ib .tr{height:8px;margin:0}
+.bgt .ib .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.warn{font-size:12.5px;padding:8px 10px;border-radius:10px;margin-top:8px;background:color-mix(in srgb,var(--c) 12%,transparent);border:1px solid color-mix(in srgb,var(--c) 35%,transparent);color:var(--c)}
+.bills{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:12px}.bills::-webkit-scrollbar{display:none}
+.bill{flex:none;padding:8px 12px;border-radius:14px;background:var(--s1);border:1px dashed var(--line);font-size:12.5px}
+.bill b{display:block;font-size:13.5px}
+.bill.due{border-style:solid;border-color:var(--peach)}
+.brow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.brow:last-child{border:0}
+.f3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.lnk{color:var(--rose);font-weight:600;font-size:13px}
+.tg{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.sw{position:relative;width:48px;height:28px;flex:none}
+.sw input{position:absolute;opacity:0;width:0;height:0}
+.sw span{position:absolute;inset:0;border-radius:99px;background:var(--s3);transition:.2s}
+.sw span::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#9a8f99;transition:.2s}
+.sw input:checked+span{background:linear-gradient(135deg,var(--rose),var(--peach))}
+.sw input:checked+span::after{transform:translateX(20px);background:#fff}
+/* ---------- private: My money ---------- */
+.pv-lock{text-align:center;padding:26px 0 10px}
+.pv-orb{width:96px;height:96px;margin:0 auto 14px;border-radius:50%;background:conic-gradient(from 0deg,#ffc38a,#ff8fab,#9085e9,#4cc9a6,#ffc38a);animation:spin 7s linear infinite;position:relative;box-shadow:0 0 50px -10px rgba(255,143,171,.8)}
+.pv-orb::after{content:"🔒";position:absolute;inset:5px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#2a2230,#110e12 70%);display:grid;place-items:center;font-size:34px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pv-orb::after{animation:spin 7s linear infinite reverse}
+.pins{display:flex;gap:12px;justify-content:center;margin:14px 0}
+.pins i{width:14px;height:14px;border-radius:50%;border:2px solid var(--line);transition:.15s}
+.pins i.on{background:var(--rose);border-color:var(--rose);box-shadow:0 0 10px var(--rose)}
+.pins.shake{animation:shake .4s}
+.pad{display:grid;grid-template-columns:repeat(3,72px);gap:12px;justify-content:center}
+.pad button{height:62px;border-radius:50%;background:var(--s1);border:1px solid var(--line);font-size:22px;font-weight:700;transition:transform .1s}
+.pad button:active{transform:scale(.9);background:var(--s3)}
+.lockerr{color:var(--bad);font-size:13px;min-height:20px}
+.pvhero{display:grid;grid-template-columns:132px 1fr;gap:14px;align-items:center;background:radial-gradient(300px 200px at 0 0,rgba(76,201,166,.14),transparent 70%),var(--s1)}
+.pvhero svg{width:132px;height:132px}
+.pvk{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+.pvv{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.4px}
+.pvrow{display:flex;justify-content:space-between;font-size:13px;padding:3px 0}
+.pvrow b{font-variant-numeric:tabular-nums}
+.inc{color:var(--gen)} .exp{color:var(--bad)}
+.pvent{display:grid;grid-template-columns:8px 1fr auto;gap:10px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line);width:100%;text-align:left}
+.pvent:last-child{border-bottom:0}
+.pvent .dot{width:8px;height:34px;border-radius:4px;background:var(--c)}
+.pvent .t{font-weight:600;font-size:14.5px}.pvent .s{font-size:12px;color:var(--muted)}
+.pvent .a{font-weight:800;font-size:16px;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:7px 11px;border-radius:99px;background:var(--s2);border:1px solid var(--line);font-size:13px;color:var(--muted)}
+.chip.on{color:var(--text);border-color:var(--c,var(--rose));background:color-mix(in srgb,var(--c,var(--rose)) 20%,var(--s2))}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.anim .dl{stroke-dashoffset:0}}
 @media print{nav,header,.noprint{display:none!important} body{background:#fff;color:#000} .card{border-color:#ccc;background:#fff} td,th{border-color:#ddd;color:#000}}
 </style>
 </head>
@@ -188,6 +274,7 @@ tr.grp td{font-weight:700;color:var(--text)}
   <button data-act="tab" data-t="cal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendar</button>
   <button data-act="tab" data-t="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3a9 9 0 1 0 9 9h-9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg>Analysis</button>
   <button data-act="tab" data-t="report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>Report</button>
+  <button data-act="tab" data-t="me" id="meTab" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>My money</button>
 </div></nav>
 <div id="sheetWrap"><div class="scrim" data-act="close"></div><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
@@ -274,7 +361,10 @@ async function load(quiet) {
   try {
     const rows = await api('expenses?select=*&kind=neq._ping&order=spent_on.desc,id.desc');
     const changed = JSON.stringify(rows) !== JSON.stringify(S.rows);
+    const had = new Set(S.rows.map(r => r.id)), fresh = S.synced || S.rows.length ? rows.filter(r => !had.has(r.id) && r.added_by && r.added_by !== S.me) : [];
     S.rows = rows; S.err = null; S.synced = Date.now(); ls.set('cache', rows);
+    if (fresh.length) { snd('ping'); toast(fresh.length === 1 ? `${fresh[0].added_by} added ${fresh[0].item} · ${rs(fresh[0].amount)}` : `${fresh[0].added_by} added ${fresh.length} expenses`); }
+    autoBills();
     if (changed) { if (typing()) dirtyWhileTyping = true; else render(); } else syncLabel();
   } catch(e) { S.err = e.message; syncLabel(); if (!quiet) toast('Could not sync: ' + e.message); }
   loading = false;
@@ -287,12 +377,31 @@ function syncLabel() {
 }
 
 // ============ render ============
-function render() {
+const TABS = ['home','cal','stats','report','me']; let lastTab = 'home';
+function render(anim = false) {
   CM = colorMap();
   $('nav').hidden = !S.secret;
+  $('meTab').hidden = !PV;
+  if (UI.tab === 'me' && !PV) UI.tab = 'home';
   document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.t === UI.tab));
-  $('view').innerHTML = !S.secret ? renderSetup() : UI.tab === 'home' ? renderHome() : UI.tab === 'cal' ? renderCal() : UI.tab === 'stats' ? renderStats() : renderReport();
+  const v = $('view');
+  v.innerHTML = !S.secret ? renderSetup() : UI.tab === 'home' ? renderHome() : UI.tab === 'cal' ? renderCal() : UI.tab === 'stats' ? renderStats() : UI.tab === 'me' ? renderMe() : renderReport();
+  v.className = '';
+  if (anim) { const d = TABS.indexOf(UI.tab) - TABS.indexOf(lastTab); void v.offsetWidth; v.className = 'anim' + (d > 0 ? ' pr' : d < 0 ? ' pl' : ''); countUp(); }
+  lastTab = UI.tab;
+  if (UI.flash) setTimeout(() => { UI.flash = null; }, 1300);
   syncLabel();
+}
+// numbers in the summary tiles count up when a page opens
+function countUp(){
+  document.querySelectorAll('#view .tile .v, #view .pvv').forEach(el => {
+    const txt = el.textContent, m = txt.match(/[\d,]+(\.\d+)?/); if (!m) return;
+    const target = parseFloat(m[0].replace(/,/g, '')); if (!(target > 0)) return;
+    const pre = txt.slice(0, m.index), post = txt.slice(m.index + m[0].length), dec = m[1] ? m[1].length - 1 : 0, t0 = performance.now();
+    const step = t => { const k = Math.min(1, (t - t0)/700), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = pre + (target*e).toLocaleString('en-IN', {minimumFractionDigits:dec, maximumFractionDigits:dec}) + post; if (k < 1) requestAnimationFrame(step); else el.textContent = txt; };
+    requestAnimationFrame(step);
+  });
 }
 
 function renderSetup() {
@@ -324,6 +433,8 @@ function renderHome() {
     <div class="tile" style="--k:var(--spc)"><div class="k">${MON[now.getMonth()]} special</div><div class="v">${rs(M.s)}</div><div class="d">Not recurring · ${M.t ? Math.round(M.s/M.t*100) : 0}% of month</div></div>
   </div>
   <div class="todayline"><span>Today total <b class="num">${rs(T.t)}</b> · ${T.n} entr${T.n === 1 ? 'y' : 'ies'}</span><span>Month <b class="num">${rs(M.t)}</b></span></div>
+  ${budgetCard(M)}
+  ${billStrip()}
   <button class="btn wa noprint" data-act="shareday" data-d="${t}" style="margin-bottom:14px">📤 Share today on WhatsApp</button>
   ${quickChips()}
   ${renderForm()}
@@ -364,7 +475,7 @@ function renderForm() {
 }
 
 function entryRow(r) {
-  return `<div class="ent" style="--c:${colorOf(r.item)}"><span class="dot"></span>
+  return `<div class="ent${UI.flash === r.id ? ' flash' : ''}" data-rid="${r.id}" style="--c:${colorOf(r.item)}"><span class="dot"></span>
     <button style="text-align:left" data-act="edit" data-id="${r.id}"><div class="t">${esc(r.item)}<span class="kb" style="--k:${kindColor(r.kind)}">${r.kind === 'special' ? 'S' : 'G'}</span></div>
     <div class="s">${esc(r.person)} · ${esc(r.mode)}${r.note ? ' · ' + esc(r.note) : ''}${r.added_by && r.added_by !== r.person ? ` · <span class="faint">by ${esc(r.added_by)}</span>` : ''}</div></button>
     <div class="r"><div class="amt2">${rs(r.amount)}</div><button class="rep noprint" data-act="repeat" data-id="${r.id}">↻ repeat</button></div></div>`;
@@ -464,8 +575,8 @@ function dailyChart(p, rows) {
   let bars = '';
   days.forEach((d,i) => {
     const gv = g[d]||0, sv = s[d]||0, gh = gv/max*(base-10), sh = sv/max*(base-10), x = i*bw + bw*.15, w = Math.max(2, bw*.7);
-    if (gh) bars += `<rect x="${x}" y="${base-gh}" width="${w}" height="${gh}" rx="${Math.min(3,w/2)}" fill="var(--gen)"/>`;
-    if (sh) bars += `<rect x="${x}" y="${base-gh-sh-(gh?2:0)}" width="${w}" height="${sh}" rx="${Math.min(3,w/2)}" fill="var(--spc)"/>`;
+    if (gh) bars += `<rect class="gy" style="animation-delay:${i*15}ms" x="${x}" y="${base-gh}" width="${w}" height="${gh}" rx="${Math.min(3,w/2)}" fill="var(--gen)"/>`;
+    if (sh) bars += `<rect class="gy" style="animation-delay:${i*15}ms" x="${x}" y="${base-gh-sh-(gh?2:0)}" width="${w}" height="${sh}" rx="${Math.min(3,w/2)}" fill="var(--spc)"/>`;
     const lab = n <= 7 ? WD[pk(d).getDay()] : (i % 5 === 0 ? pk(d).getDate() : '');
     if (lab !== '') bars += `<text x="${x+w/2}" y="${H-4}" text-anchor="middle" font-size="9.5" fill="#b0a3ad">${lab}</text>`;
     bars += `<rect x="${i*bw}" y="0" width="${bw}" height="${H}" fill="transparent"><title>${ds(pk(d))}: ${rs(gv+sv)}</title></rect>`;
@@ -477,7 +588,7 @@ function momCard(p) {
   const months = []; for (let i = 5; i >= 0; i--) { const a = new Date(p.a.getFullYear(), p.a.getMonth()-i, 1), b = new Date(a.getFullYear(), a.getMonth()+1, 1); months.push({a, g: periodTotals(dk(a), dk(b)).g}); }
   const max = Math.max(1, ...months.map(m => m.g)), cur = months[5], prev = months[4], chg = pctChg(cur.g, prev.g);
   const W = 320, H = 120, bw = W/6;
-  const bars = months.map((m,i) => { const h = m.g/max*(H-38); return `<rect x="${i*bw+8}" y="${H-18-h}" width="${bw-16}" height="${h}" rx="4" fill="${i===5?'var(--gen)':'#2f6e5d'}"/>
+  const bars = months.map((m,i) => { const h = m.g/max*(H-38); return `<rect class="gy" style="animation-delay:${i*60}ms" x="${i*bw+8}" y="${H-18-h}" width="${bw-16}" height="${h}" rx="4" fill="${i===5?'var(--gen)':'#2f6e5d'}"/>
     <text x="${i*bw+bw/2}" y="${H-4}" text-anchor="middle" font-size="10" fill="#b0a3ad">${MON[m.a.getMonth()]}</text>
     ${m.g ? `<text x="${i*bw+bw/2}" y="${H-22-h}" text-anchor="middle" font-size="9.5" fill="#f6eff4">${rk(m.g)}</text>` : ''}`; }).join('');
   return `<div class="card"><h3>General run rate · month on month</h3><div class="chart"><svg viewBox="0 0 ${W} ${H}">${bars}</svg></div>
@@ -542,7 +653,7 @@ function readForm() {
   if ($('fAmt')) { F.amount = g('fAmt'); F.date = g('fDate') || F.date; F.note = g('fNote'); }
   ls.set('draft', F);
 }
-function sheet(h) { $('sheet').innerHTML = h; document.body.classList.add('open'); }
+function sheet(h) { $('sheet').innerHTML = h; document.body.classList.add('open'); snd('sheet'); }
 function closeSheet() { document.body.classList.remove('open'); }
 let tt; function toast(m) { const t = $('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2400); }
 /* ---------- category picker: search, favourites, delete (hide) ---------- */
@@ -625,7 +736,325 @@ function csv(a, b) {
   document.body.appendChild(el); el.click(); el.remove(); toast(`Downloaded ${rows.length} expenses`);
 }
 
+/* ===================== sound (made in the app, no files) ===================== */
+const SET = {sound:true, ...ls.get('settings', {})};
+let AC = null;
+function snd(kind){
+  if (!SET.sound) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume();
+    const now = AC.currentTime;
+    const tone = (f, st, d, type = 'sine', g = .06) => { const o = AC.createOscillator(), gn = AC.createGain(); o.type = type; o.frequency.value = f;
+      gn.gain.setValueAtTime(0, now + st); gn.gain.linearRampToValueAtTime(g, now + st + .012); gn.gain.exponentialRampToValueAtTime(.0001, now + st + d);
+      o.connect(gn).connect(AC.destination); o.start(now + st); o.stop(now + st + d + .05); };
+    if (kind === 'save') [659, 880, 1175].forEach((f, i) => tone(f, i*.07, .45));            // coin-like rising chime
+    else if (kind === 'del') { tone(392, 0, .12, 'triangle', .04); tone(262, .08, .22, 'triangle', .04); }
+    else if (kind === 'tap') tone(1046, 0, .05, 'triangle', .022);
+    else if (kind === 'tab') { tone(784, 0, .07, 'triangle', .022); tone(1046, .045, .08, 'triangle', .018); }
+    else if (kind === 'sheet') tone(660, 0, .08, 'sine', .028);
+    else if (kind === 'ping') { tone(988, 0, .25); tone(1319, .1, .35); }
+    else if (kind === 'warn') { tone(440, 0, .2, 'square', .025); tone(349, .14, .3, 'square', .025); }
+    else if (kind === 'unlock') { tone(523, 0, .25); tone(784, .09, .3); tone(1047, .18, .4, 'sine', .04); }
+    else if (kind === 'err') tone(150, 0, .2, 'square', .025);
+    else if (kind === 'income') [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, i*.06, .5, 'sine', .05));
+  } catch(e) {}
+}
+function dl(name, text, type){ const b = new Blob([text], {type}), a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1500); }
+
+/* ===================== budgets + forecast (kept on this phone) ===================== */
+let BUD = ls.get('budget', {gen:0, items:{}});
+const dim = d => new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
+function budgetCard(M){
+  const now = new Date(), items = Object.entries(BUD.items || {});
+  const elapsed = now.getDate(), days = dim(now), fc = elapsed ? M.g / elapsed * days : 0;
+  const lastMs = dk(new Date(now.getFullYear(), now.getMonth()-1, 1)), ms = dk(new Date(now.getFullYear(), now.getMonth(), 1)), lastG = periodTotals(lastMs, ms).g;
+  if (!BUD.gen && !items.length) return `<div class="card bgt noprint"><div class="top"><span class="muted small">📈 Month-end forecast (General)</span><b>${rs(Math.round(fc))}</b></div>
+    <div class="row2"><span>${lastG ? `last month ${rs(lastG)}` : 'at this pace'}</span><button class="lnk" data-act="budgets">Set a budget ›</button></div></div>`;
+  const pct = BUD.gen ? M.g / BUD.gen : 0, c = pct >= 1 ? 'var(--bad)' : pct >= .8 ? 'var(--spc)' : 'var(--gen)';
+  const mk = today().slice(0,7), spentOn = it => S.rows.filter(r => r.spent_on.startsWith(mk) && r.item === it).reduce((a, r) => a + Number(r.amount), 0);
+  return `<div class="card bgt noprint">
+    ${BUD.gen ? `<div class="top"><span class="muted small">💰 ${MONTHS[now.getMonth()]} General budget</span><b>${rs(M.g)} <span class="muted small" style="font-weight:500">/ ${rs(BUD.gen)}</span></b></div>
+    <div class="tr" style="--c:${c}"><i style="width:${Math.min(100, pct*100)}%"></i><span class="fc" style="left:${Math.min(99, fc/BUD.gen*100)}%" title="forecast"></span></div>
+    <div class="row2"><span>${pct < 1 ? `${rs(BUD.gen - M.g)} left · ${days - elapsed} days to go` : `Over by ${rs(M.g - BUD.gen)}`}</span><span>forecast ${rs(Math.round(fc))}</span></div>
+    ${pct >= 1 ? `<div class="warn" style="--c:var(--bad)">⛔ General budget crossed.</div>` : pct >= .8 ? `<div class="warn" style="--c:var(--spc)">⚠️ ${Math.round(pct*100)}% of the budget used with ${days - elapsed} days left.</div>` : fc > BUD.gen ? `<div class="warn" style="--c:var(--spc)">📈 At this pace you'll end near ${rs(Math.round(fc))}, above budget.</div>` : ''}` : ''}
+    ${items.map(([it, b]) => { const sp = spentOn(it), p = sp / b, cc = p >= 1 ? 'var(--bad)' : p >= .8 ? 'var(--spc)' : colorOf(it);
+      return `<div class="ib"><span>${esc(it)}</span><div class="tr" style="--c:${cc}"><i style="width:${Math.min(100, p*100)}%"></i></div><span class="v">${rs(sp)} / ${rk(b)}</span></div>`; }).join('')}
+    <div class="row2" style="margin-top:6px"><span>${lastG ? `Last month General ${rs(lastG)}` : ''}</span><button class="lnk" data-act="budgets">Edit ›</button></div></div>`;
+}
+function budgetAlert(){
+  if (!BUD.gen) return; const mk = today().slice(0,7), W = ls.get('bwarn', {}), g = S.rows.filter(r => r.kind === 'general' && r.spent_on.startsWith(mk)).reduce((a, r) => a + Number(r.amount), 0), p = g / BUD.gen;
+  const lvl = p >= 1 ? 100 : p >= .8 ? 80 : 0; if (!lvl || (W.m === mk && W.l >= lvl)) return;
+  ls.set('bwarn', {m:mk, l:lvl}); setTimeout(() => { snd('warn'); toast(lvl === 100 ? '⛔ General budget crossed for this month' : '⚠️ 80% of this month\'s General budget used'); }, 900);
+}
+function sheetBudgets(){
+  sheet(`<h3>💰 Monthly budgets</h3>
+    <div class="fl">General (recurring) budget per month</div><input id="bGen" inputmode="numeric" placeholder="e.g. 40000" value="${BUD.gen || ''}">
+    <div class="fl" style="margin-top:14px">Item budgets (optional)</div>
+    <div id="budItems">${Object.entries(BUD.items || {}).map(([n, a]) => `<div class="grid2" data-bi="1"><input class="bn" value="${esc(n)}" list="itemList"><input class="ba" inputmode="numeric" value="${a}"></div>`).join('') || `<div class="grid2" data-bi="1"><input class="bn" placeholder="Item, e.g. Groceries" list="itemList"><input class="ba" inputmode="numeric" placeholder="₹ per month"></div>`}</div>
+    <datalist id="itemList">${uniq(S.rows.map(r => r.item)).map(i => `<option value="${esc(i)}">`).join('')}</datalist>
+    <button class="btn" data-act="addbudrow">＋ Add item budget</button><div style="height:10px"></div>
+    <button class="btn main" data-act="savebud">Save budgets</button>
+    <p class="small faint">You get a warning at 80% and when the budget is crossed. Budgets are kept on this phone; set them on your wife's phone too if she wants the warnings.</p>`);
+}
+
+/* ===================== recurring bills (added automatically from this phone) ===================== */
+let BILLS = ls.get('bills', []);
+const billDone = () => ls.get('billdone', {});
+function billStrip(){
+  if (!BILLS.length) return '';
+  const now = new Date(), mk = today().slice(0,7), done = billDone();
+  return `<div class="small muted" style="margin:0 2px 6px">↻ Bills this month</div><div class="bills noprint">${BILLS.slice().sort((a,b) => a.day - b.day).map(b => {
+    const d = Math.min(b.day, dim(now)), st = (b.skip || []).includes(mk) ? 'skipped' : (done[b.id] || []).includes(mk) ? '✓ added' : now.getDate() >= d ? 'adding…' : `due ${d} ${MON[now.getMonth()]}`;
+    return `<button class="bill${st.startsWith('due') && d - now.getDate() <= 3 ? ' due' : ''}" data-act="bills"><b>${esc(b.item)} · ${rs(b.amount)}</b><span class="muted">${st}</span></button>`; }).join('')}</div>`;
+}
+let billBusy = false;
+async function autoBills(){
+  if (billBusy || !S.secret || !BILLS.length) return; billBusy = true;
+  const now = new Date(), mk = today().slice(0,7), done = billDone(); let added = 0;
+  try {
+    for (const b of BILLS) {
+      const d = Math.min(b.day, dim(now));
+      if (now.getDate() < d || (b.skip || []).includes(mk) || (done[b.id] || []).includes(mk)) continue;
+      const exists = S.rows.some(r => r.spent_on.startsWith(mk) && r.item === b.item && r.person === b.person && Number(r.amount) === Number(b.amount) && (r.note || '').startsWith('↻'));
+      if (!exists) { const r = await api('expenses', {method:'POST', body: JSON.stringify({spent_on:`${mk}-${pad(d)}`, kind:b.kind || 'general', person:b.person, item:b.item, amount:b.amount, mode:b.mode, note:'↻ monthly bill', added_by:S.me})}); S.rows.unshift(r[0]); added++; }
+      (done[b.id] = done[b.id] || []).push(mk);
+    }
+    ls.set('billdone', done);
+    if (added) { ls.set('cache', S.rows); snd('save'); render(); toast(`↻ ${added} monthly bill${added > 1 ? 's' : ''} added`); budgetAlert(); }
+  } catch(e) { /* try again on next sync */ }
+  billBusy = false;
+}
+function sheetBills(){
+  const mk = today().slice(0,7), done = billDone();
+  sheet(`<h3>↻ Recurring bills</h3>
+    <p class="small muted" style="margin-top:-6px">Added automatically on their day each month, from this phone. Skip a month any time.</p>
+    ${BILLS.length ? BILLS.slice().sort((a,b) => a.day - b.day).map(b => `<div class="brow"><button style="text-align:left" data-act="billedit" data-id="${b.id}"><b>${esc(b.item)} · ${rs(b.amount)}</b><div class="small muted">Day ${b.day} · ${esc(b.person)} · ${esc(b.mode)}${b.kind === 'special' ? ' · special' : ''}${(done[b.id] || []).includes(mk) ? ' · ✓ this month' : ''}</div></button>
+      <span style="display:flex;gap:6px"><button class="btn sm" data-act="billskip" data-id="${b.id}">${(b.skip || []).includes(mk) ? 'Unskip' : 'Skip month'}</button><button class="btn sm danger" data-act="billdel" data-id="${b.id}">✕</button></span></div>`).join('') : '<div class="muted small" style="padding:8px 0">No recurring bills yet. Rent, EMIs and school fees are good ones.</div>'}
+    <div style="height:10px"></div><button class="btn main" data-act="billadd">＋ Add a recurring bill</button>`);
+}
+function sheetBillForm(b){
+  sheet(`<h3>${b.id ? 'Edit bill' : 'New recurring bill'}</h3><input type="hidden" id="blId" value="${b.id || ''}">
+    <div class="grid2"><div><div class="fl">What</div><input id="blItem" value="${esc(b.item || '')}" placeholder="e.g. Rent" list="itemList2"></div><div><div class="fl">Who</div><input id="blWho" value="${esc(b.person || S.me)}" list="peopleList"></div></div>
+    <div class="f3"><div><div class="fl">Amount</div><input id="blAmt" inputmode="decimal" value="${b.amount || ''}" placeholder="₹"></div><div><div class="fl">Day of month</div><input id="blDay" inputmode="numeric" value="${b.day || 1}"></div><div><div class="fl">Paid by</div><input id="blMode" value="${esc(b.mode || 'Net Banking')}" list="modeList"></div></div>
+    <label class="tg" style="border:0"><span>Special (one-off type)</span><span class="sw"><input type="checkbox" id="blSpc" ${b.kind === 'special' ? 'checked' : ''}><span></span></span></label>
+    <datalist id="itemList2">${uniq(S.rows.map(r => r.item)).map(i => `<option value="${esc(i)}">`).join('')}</datalist><datalist id="peopleList">${people().map(i => `<option value="${esc(i)}">`).join('')}</datalist><datalist id="modeList">${modes().map(i => `<option value="${esc(i)}">`).join('')}</datalist>
+    <div style="height:8px"></div><button class="btn main" data-act="billsave">Save bill</button><div style="height:8px"></div><button class="btn" data-act="bills">Back</button>`);
+}
+
+/* ===================== backup ===================== */
+function sheetBackup(){
+  sheet(`<h3>⬇ Backup & export</h3>
+    <button class="btn main" data-act="expall">Export full backup (.json)</button>
+    <p class="small faint">All ${S.rows.length} shared expenses plus this phone's lists, favourites, budgets and bills.</p>
+    <button class="btn" data-act="csv" data-a="0000" data-b="9999">Export all expenses (Excel / CSV)</button><div style="height:8px"></div>
+    <button class="btn" data-act="impall">Restore this phone's settings from a backup</button>
+    <p class="small faint">Restoring brings back lists, favourites, budgets and bills on this phone. Shared expenses already live in the database, so they are never duplicated. My money has its own backup inside its screen.</p>`);
+}
+const impEl = document.createElement('input'); impEl.type = 'file'; impEl.id = 'impFile'; impEl.accept = '.json,application/json'; impEl.hidden = true; document.body.appendChild(impEl);
+impEl.onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (!f) return; const r = new FileReader();
+  r.onload = () => { try { const d = JSON.parse(r.result);
+      if (d.kind === 'private') { if (!PV) PV = pvFresh(); const ids = new Set([...PV.income, ...PV.exp].map(x => x.id)); let n = 0;
+        (d.income || []).forEach(x => { if (!ids.has(x.id)) { PV.income.push(x); n++; } }); (d.exp || []).forEach(x => { if (!ids.has(x.id)) { PV.exp.push(x); n++; } });
+        PV.src = uniq([...PV.src, ...(d.src || [])]); PV.cats = uniq([...PV.cats, ...(d.cats || [])]); (d.rec || []).forEach(x => { if (!PV.rec.some(y => y.id === x.id)) PV.rec.push(x); });
+        savePV(); render(true); snd('save'); return toast(`Restored ${n} private entries`); }
+      if (!d.phone) throw 0; const ph = d.phone;
+      if (ph.extra) { S.extra = ph.extra; ls.set('extra', S.extra); } if (ph.prefs) { Object.assign(PR, ph.prefs); savePR(); }
+      if (ph.budget) { BUD = ph.budget; ls.set('budget', BUD); } if (ph.bills) { BILLS = ph.bills; ls.set('bills', BILLS); }
+      closeSheet(); render(true); snd('save'); toast('This phone\'s settings restored'); } catch(err) { snd('err'); toast('That file is not a Home Sweet Home backup'); } };
+  r.readAsText(f); };
+
+/* ===================== My money: private, PIN/fingerprint, this phone only ===================== */
+// Never sent to the shared database. Lives only in this phone's storage, behind its own PIN.
+const pvFresh = () => ({income:[], exp:[], rec:[], recDone:{}, household:true,
+  src:['Salary','Interest','Dividend','Rent received','Bonus','Refund','Other'],
+  cats:['Investment / SIP','Insurance','Loan EMI','Personal','Gifts','Family support','Travel','Other']});
+let PV = ls.get('priv', null);
+const savePV = () => ls.set('priv', PV);
+let PLK = {pinHash:null, salt:null, cred:null, ...ls.get('privlock', {})};
+const savePLK = () => ls.set('privlock', PLK);
+const PL = {open:false, mode:null, buf:'', first:'', fails:0, until:0};
+const b64 = buf => btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const unb64 = s => Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/') + '==='.slice((s.length + 3) % 4)), c => c.charCodeAt(0));
+const rand = n => crypto.getRandomValues(new Uint8Array(n));
+async function hashPin(pin, salt){ return b64(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + ':' + pin))); }
+async function bioAvailable(){ try { return !!(window.PublicKeyCredential && await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()); } catch(e) { return false; } }
+async function bioRegister(){ const c = await navigator.credentials.create({publicKey:{challenge:rand(32), rp:{name:'Home Sweet Home'}, user:{id:rand(16), name:'my-money', displayName:'My money'},
+  pubKeyCredParams:[{type:'public-key', alg:-7},{type:'public-key', alg:-257}], authenticatorSelection:{authenticatorAttachment:'platform', userVerification:'required', residentKey:'discouraged'}, timeout:60000, attestation:'none'}});
+  PLK.cred = b64(c.rawId); savePLK(); }
+const bioCheck = () => navigator.credentials.get({publicKey:{challenge:rand(32), allowCredentials:[{type:'public-key', id:unb64(PLK.cred), transports:['internal']}], userVerification:'required', timeout:60000}});
+async function tryBio(){ if (!PLK.cred || PL.open) return; try { await bioCheck(); PL.open = true; snd('unlock'); render(true); } catch(e) { const el = $('lockerr'); if (el) el.textContent = 'Fingerprint not confirmed. Use your PIN.'; } }
+function lockPad(msg = ''){
+  const m = PLK.pinHash ? (PL.mode || 'unlock') : (PL.mode === 'setup2' ? 'setup2' : 'setup1');
+  const title = m === 'setup1' ? 'Create a PIN for My money' : m === 'setup2' ? 'Confirm your PIN' : m === 'change1' ? 'Enter a new PIN' : 'My money is locked';
+  const sub = m === 'setup1' ? 'Only you will know it. Your income and private spends stay on this phone and never go to the shared database.' : m === 'setup2' ? 'Type the same 6 digits again.' : PLK.cred ? 'Touch the fingerprint sensor, or enter your PIN.' : 'Enter your 6-digit PIN.';
+  return `<div class="pv-lock"><div class="pv-orb"></div><h2 style="margin:0">${title}</h2><p class="muted small" style="max-width:300px;margin:6px auto 0">${sub}</p>
+    <div class="pins" id="pins">${[0,1,2,3,4,5].map(i => `<i class="${i < PL.buf.length ? 'on' : ''}"></i>`).join('')}</div><div class="lockerr" id="lockerr">${msg}</div>
+    <div class="pad">${[1,2,3,4,5,6,7,8,9].map(n => `<button data-act="ppin" data-v="${n}">${n}</button>`).join('')}
+    ${m === 'unlock' && PLK.cred ? `<button data-act="ppin" data-v="bio" style="color:var(--gen)">◉</button>` : '<span></span>'}<button data-act="ppin" data-v="0">0</button><button data-act="ppin" data-v="del">⌫</button></div></div>`;
+}
+async function ppin(k){
+  const repaint = msg => { $('view').innerHTML = lockPad(msg); };
+  if (k === 'bio') return tryBio();
+  if (Date.now() < PL.until) return repaint(`Too many tries. Wait ${Math.ceil((PL.until - Date.now())/1000)}s.`);
+  if (k === 'del') { PL.buf = PL.buf.slice(0, -1); return repaint(); }
+  if (PL.buf.length >= 6) return;
+  snd('tap'); PL.buf += k; repaint(); if (PL.buf.length < 6) return;
+  const pin = PL.buf, m = PLK.pinHash ? (PL.mode || 'unlock') : (PL.mode === 'setup2' ? 'setup2' : 'setup1');
+  if (m === 'setup1' || m === 'change1') { PL.first = pin; PL.buf = ''; PL.mode = 'setup2'; PL.was = m; return setTimeout(() => repaint(), 150); }
+  if (m === 'setup2') {
+    if (pin !== PL.first) { PL.buf = ''; PL.mode = PL.was === 'change1' ? 'change1' : null; snd('err'); return setTimeout(() => { repaint('The two PINs didn\'t match. Start again.'); $('pins').classList.add('shake'); }, 150); }
+    PLK.salt = b64(rand(16)); PLK.pinHash = await hashPin(pin, PLK.salt); savePLK(); PL.mode = null; PL.buf = ''; PL.open = true; snd('unlock'); render(true);
+    if (PL.was !== 'change1' && await bioAvailable()) setTimeout(() => sheet(`<h3>Use your fingerprint?</h3><p class="muted">Unlock My money with this phone's fingerprint. Your PIN stays as a backup.</p><button class="btn main" data-act="pvbioon">Turn on fingerprint unlock</button><div style="height:8px"></div><button class="btn" data-act="close">Not now</button>`), 400);
+    else if (PL.was === 'change1') toast('PIN changed'); PL.was = null; return;
+  }
+  if (await hashPin(pin, PLK.salt) === PLK.pinHash) { PL.fails = 0; PL.buf = ''; PL.open = true; snd('unlock'); render(true); }
+  else { PL.fails++; PL.buf = ''; snd('err'); if (PL.fails >= 5) { PL.until = Date.now() + 30000; PL.fails = 0; }
+    setTimeout(() => { repaint(PL.until > Date.now() ? 'Too many wrong tries. Wait 30 seconds.' : 'Wrong PIN. Try again.'); $('pins').classList.add('shake'); }, 120); }
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden && PL.open) { PL.open = false; if (UI.tab === 'me') { closeSheet(); render(); } } });
+
+const PCOL = ['#3987e5','#9085e9','#ffc38a','#4cc9a6','#d55181','#c98500','#199e70','#e66767','#ff8fab','#6b6270'];
+const pcol = (list, v) => PCOL[Math.max(0, list.indexOf(v)) % PCOL.length];
+function pvMonth(off){ const n = new Date(), a = new Date(n.getFullYear(), n.getMonth() + off, 1), b = new Date(a.getFullYear(), a.getMonth()+1, 1); return {a, b, A:dk(a), B:dk(b), label:`${MONTHS[a.getMonth()]} ${a.getFullYear()}`}; }
+function pvData(A, B){
+  const inc = PV.income.filter(x => x.date >= A && x.date < B), own = PV.exp.filter(x => x.date >= A && x.date < B);
+  const hh = PV.household ? S.rows.filter(r => r.spent_on >= A && r.spent_on < B && r.added_by === S.me) : [];
+  const I = inc.reduce((s, x) => s + x.amount, 0), O = own.reduce((s, x) => s + x.amount, 0), H = sum(hh);
+  return {inc, own, hh, I, O, H, E:O + H, bal:I - O - H};
+}
+function pvAutoRec(){
+  if (!PV || !PV.rec.length) return; const now = new Date(), mk = today().slice(0,7); let n = 0;
+  PV.rec.forEach(r => { const d = Math.min(r.day, dim(now)); if (now.getDate() < d || (PV.recDone[r.id] || []).includes(mk)) return;
+    const e = {id:'p' + Date.now().toString(36) + Math.random().toString(36).slice(2,5), date:`${mk}-${pad(d)}`, amount:r.amount, note:r.note || '↻ monthly', rec:r.id};
+    if (r.type === 'inc') PV.income.push({...e, src:r.src}); else PV.exp.push({...e, cat:r.cat, mode:r.mode || ''});
+    (PV.recDone[r.id] = PV.recDone[r.id] || []).push(mk); n++; });
+  if (n) { savePV(); setTimeout(() => toast(`↻ ${n} monthly entr${n > 1 ? 'ies' : 'y'} added to My money`), 600); }
+}
+function renderMe(){
+  if (!PV) return '';
+  if (!PL.open) { setTimeout(() => { if (!PL.open && PLK.cred && PLK.pinHash && !PL.mode) tryBio(); }, 300); return lockPad(); }
+  pvAutoRec();
+  UI.pm = UI.pm || 0; const M = pvMonth(UI.pm), D = pvData(M.A, M.B), P = pvMonth(UI.pm - 1), DP = pvData(P.A, P.B);
+  const rate = D.I ? Math.round(D.bal / D.I * 100) : null, spentP = D.I ? Math.min(1, D.E / D.I) : (D.E ? 1 : 0);
+  const R = 52, C = 2*Math.PI*R, ring = `<svg viewBox="0 0 132 132"><circle cx="66" cy="66" r="${R}" fill="none" stroke="#302a33" stroke-width="14"/>
+    <circle cx="66" cy="66" r="${R}" fill="none" stroke="url(#rg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="${(spentP*C).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 66 66)" style="animation:sweep 1.1s cubic-bezier(.2,.9,.3,1) both"/>
+    <defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#ffc38a"/><stop offset="1" stop-color="${spentP >= 1 ? '#ff8a8a' : '#ff8fab'}"/></linearGradient></defs>
+    <text x="66" y="62" text-anchor="middle" font-size="11" fill="#b0a3ad">${D.I ? 'spent' : 'no income'}</text><text x="66" y="82" text-anchor="middle" font-size="22" font-weight="800" fill="#f6eff4">${D.I ? Math.round(D.E / D.I * 100) + '%' : '—'}</text></svg>`;
+  const chg = (a, b) => b ? `<span class="${a >= b ? 'down' : 'up'}" style="font-size:11.5px">${a >= b ? '▲' : '▼'} ${Math.abs(Math.round((a - b)/b*100))}%</span>` : '';
+  let h = `<div class="pnav"><button class="icon-btn" data-act="pmnav" data-v="-1">‹</button><h2>My money<small>${M.label} · 🔒 only on this phone</small></h2><button class="icon-btn" data-act="pmnav" data-v="1" ${UI.pm >= 0 ? 'style="visibility:hidden"' : ''}>›</button></div>
+    <div class="card pvhero">${ring}<div><div class="pvk">Balance</div><div class="pvv ${D.bal >= 0 ? 'inc' : 'exp'}">${D.bal < 0 ? '−' : ''}${rs(Math.abs(D.bal))}</div>
+      <div class="pvrow"><span class="muted">Income</span><b class="inc">${rs(D.I)}</b></div><div class="pvrow"><span class="muted">Spent</span><b class="exp">${rs(D.E)}</b></div>
+      <div class="pvrow"><span class="muted">Saved</span><b>${rate == null ? '—' : rate + '%'}</b></div></div></div>
+    <div class="sum"><div class="tile" style="--k:var(--gen)"><div class="k">Income</div><div class="v">${rs(D.I)}</div><div class="d">${chg(D.I, DP.I) || 'this month'} ${DP.I ? 'vs last' : ''}</div></div>
+      <div class="tile" style="--k:var(--bad)"><div class="k">Spent</div><div class="v">${rs(D.E)}</div><div class="d">own ${rk(D.O)}${PV.household ? ` · 🏠 ${rk(D.H)}` : ''}</div></div></div>
+    <div class="grid2 noprint"><button class="btn main" data-act="pvadd" data-t="inc">＋ Income</button><button class="btn" data-act="pvadd" data-t="exp" style="border-color:var(--bad);color:#ffb3b3">＋ Expense</button></div><div style="height:12px"></div>`;
+  h += pvFlow(M, D) + pvBreak(D) + pvYear() + pvList(D) + pvTools();
+  return h;
+}
+// Hydra-style: money in (green) vs money out (red) adding up through the month; the gap is your balance
+function pvFlow(M, D){
+  const n = dim(M.a), W = 340, Hh = 170, top = 12, base = Hh - 20, left = 34, isCur = UI.pm === 0, upTo = isCur ? new Date().getDate() : n;
+  const byDay = (list, f) => { const a = Array(n + 1).fill(0); list.forEach(x => a[+f(x).slice(8, 10)] += Number(x.amount)); for (let i = 1; i <= n; i++) a[i] += a[i-1]; return a; };
+  const ci = byDay(D.inc, x => x.date), ce = byDay([...D.own, ...D.hh.map(r => ({date:r.spent_on, amount:r.amount}))], x => x.date);
+  const ymax = Math.max(1000, ci[n], ce[n]) * 1.1, X = d => left + d / n * (W - left - 6), Y = v => base - v / ymax * (base - top);
+  let g = ''; const st = [5000, 10000, 25000, 50000, 100000, 200000, 500000].find(s => ymax / s <= 5) || 1000000;
+  for (let v = st; v < ymax; v += st) g += `<line x1="${left}" x2="${W - 6}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}" stroke="#352e39"/><text x="${left - 4}" y="${(Y(v) + 3).toFixed(1)}" text-anchor="end" font-size="9" fill="#b0a3ad">${rk(v)}</text>`;
+  for (let d = 1; d <= upTo; d++) { const c = ci[d] >= ce[d] ? '#4cc9a6' : '#ff8a8a'; g += `<polygon points="${X(d-1).toFixed(1)},${Y(ci[d-1]).toFixed(1)} ${X(d).toFixed(1)},${Y(ci[d]).toFixed(1)} ${X(d).toFixed(1)},${Y(ce[d]).toFixed(1)} ${X(d-1).toFixed(1)},${Y(ce[d-1]).toFixed(1)}" fill="${c}" opacity=".22" style="animation:fadein .8s .3s both"/>`; }
+  const line = a => Array.from({length:upTo + 1}, (_, d) => `${X(d).toFixed(1)},${Y(a[d]).toFixed(1)}`).join(' ');
+  g += `<polyline class="dl" points="${line(ci)}" fill="none" stroke="#4cc9a6" stroke-width="2.6" stroke-linejoin="round"/><polyline class="dl" points="${line(ce)}" fill="none" stroke="#ff8a8a" stroke-width="2.6" stroke-linejoin="round"/>`;
+  if (isCur) g += `<line x1="${X(upTo)}" x2="${X(upTo)}" y1="${top}" y2="${base}" stroke="#fff" opacity=".35"/>`;
+  [1, 8, 15, 22, n].forEach(d => g += `<text x="${X(d).toFixed(1)}" y="${Hh - 5}" text-anchor="middle" font-size="9.5" fill="#b0a3ad">${d}</text>`);
+  g += `<line x1="${left}" x2="${W - 6}" y1="${base}" y2="${base}" stroke="#352e39"/>`;
+  return `<div class="card chart"><h3>Money in vs out · ${MON[M.a.getMonth()]}</h3><svg viewBox="0 0 ${W} ${Hh}">${g}</svg>
+    <div class="legend"><span><i style="background:#4cc9a6"></i>Income so far</span><span><i style="background:#ff8a8a"></i>Spent so far</span></div>
+    <div class="cap">${D.I ? (D.bal >= 0 ? `You've kept <b style="color:var(--text)">${rs(D.bal)}</b> of ${rs(D.I)} this month.` : `Spending is <b style="color:var(--bad)">${rs(-D.bal)}</b> above income this month.`) : 'Add your income to see the balance line.'}</div></div>`;
+}
+function pvBreak(D){
+  const ex = {}; D.own.forEach(x => ex[x.cat] = (ex[x.cat] || 0) + x.amount); if (D.H) ex['🏠 Household (shared)'] = D.H;
+  const exl = Object.entries(ex).sort((a,b) => b[1] - a[1]), inl = Object.entries(D.inc.reduce((m, x) => (m[x.src] = (m[x.src] || 0) + x.amount, m), {})).sort((a,b) => b[1] - a[1]);
+  const bars = (l, colf) => { const mx = Math.max(...l.map(x => x[1]), 1); return l.map(([k, v]) => `<div class="br"><span>${esc(k)}</span><div class="tr"><i style="width:${v/mx*100}%;--c:${colf(k)}"></i></div><span class="v">${rs(v)}</span></div>`).join(''); };
+  let h = '';
+  if (exl.length) { const tot = exl.reduce((a, x) => a + x[1], 0), sl = exl.slice(0, 7).map(([k, v]) => ({k, v, c:k.startsWith('🏠') ? 'var(--rose)' : pcol(PV.cats, k)}));
+    h += `<div class="card"><h3>Where it went</h3><div class="pie">${pie(sl, tot)}<div class="leg">${sl.map(s => `<div class="li" style="--c:${s.c}"><span class="sw"></span><span>${esc(s.k)}</span><span class="p">${Math.round(s.v/tot*100)}%</span></div>`).join('')}</div></div></div>`;
+    if (D.H) { const top = group(D.hh, 'item').slice(0, 6); h += `<div class="card bars"><h3>🏠 Your household spends</h3>${bars(top, colorOf)}<p class="small faint" style="margin:6px 0 0">Shared expenses you added in Home Sweet Home. Turn this off in tools below if you don't want them counted.</p></div>`; } }
+  if (inl.length) h += `<div class="card bars"><h3>Income sources</h3>${bars(inl, k => pcol(PV.src, k))}</div>`;
+  return h;
+}
+function pvYear(){
+  const ms = []; for (let i = 11; i >= 0; i--) { const M = pvMonth(UI.pm - i), D = pvData(M.A, M.B); ms.push({M, D}); }
+  if (!ms.some(x => x.D.I || x.D.E)) return '';
+  const W = 340, Hh = 160, top = 14, base = Hh - 20, bw = W / 12, mx = Math.max(...ms.map(x => Math.max(x.D.I, x.D.E)), 1), Y = v => base - v / mx * (base - top);
+  let g = '', pts = [];
+  ms.forEach(({M, D}, i) => { const x = i * bw;
+    if (D.I) g += `<rect class="gy" style="animation-delay:${i*40}ms" x="${(x + bw*.12).toFixed(1)}" y="${Y(D.I).toFixed(1)}" width="${(bw*.36).toFixed(1)}" height="${(base - Y(D.I)).toFixed(1)}" rx="3" fill="#4cc9a6"/>`;
+    if (D.E) g += `<rect class="gy" style="animation-delay:${i*40 + 20}ms" x="${(x + bw*.52).toFixed(1)}" y="${Y(D.E).toFixed(1)}" width="${(bw*.36).toFixed(1)}" height="${(base - Y(D.E)).toFixed(1)}" rx="3" fill="#ff8a8a"/>`;
+    g += `<text x="${(x + bw/2).toFixed(1)}" y="${Hh - 5}" text-anchor="middle" font-size="9.5" fill="#b0a3ad">${MON[M.a.getMonth()].slice(0, 1)}</text>`;
+    if (D.I || D.E) pts.push(`${(x + bw/2).toFixed(1)},${Y(Math.max(0, D.bal)).toFixed(1)}`); });
+  if (pts.length > 1) g += `<polyline class="dl" points="${pts.join(' ')}" fill="none" stroke="#ffc38a" stroke-width="2" stroke-dasharray="1400"/>`;
+  const withI = ms.filter(x => x.D.I), avgRate = withI.length ? Math.round(withI.reduce((a, x) => a + x.D.bal / x.D.I, 0) / withI.length * 100) : null, saved = withI.reduce((a, x) => a + x.D.bal, 0);
+  return `<div class="card chart"><h3>12 months</h3><svg viewBox="0 0 ${W} ${Hh}"><line x1="0" x2="${W}" y1="${base}" y2="${base}" stroke="#352e39"/>${g}</svg>
+    <div class="legend"><span><i style="background:#4cc9a6"></i>Income</span><span><i style="background:#ff8a8a"></i>Spent</span><span><i style="background:#ffc38a"></i>Balance</span></div>
+    <div class="kpis" style="margin:10px 0 0"><div class="kpi"><div class="k">Net saved*</div><div class="v ${saved >= 0 ? 'down' : 'up'}">${rk(Math.abs(saved))}</div></div><div class="kpi"><div class="k">Avg saved</div><div class="v">${avgRate == null ? '—' : avgRate + '%'}</div></div><div class="kpi"><div class="k">Avg income</div><div class="v">${rk(withI.length ? withI.reduce((a, x) => a + x.D.I, 0) / withI.length : 0)}</div></div></div></div>`;
+}
+function pvList(D){
+  const all = [...D.inc.map(x => ({...x, t:'inc'})), ...D.own.map(x => ({...x, t:'exp'})), ...D.hh.map(r => ({id:r.id, date:r.spent_on, amount:Number(r.amount), cat:r.item, note:r.note, t:'hh', mode:r.mode}))].sort((a,b) => a.date < b.date ? 1 : -1);
+  return `<div class="card"><h3>Entries · ${all.length}</h3>${all.length ? all.map(x => `<button class="pvent" ${x.t === 'hh' ? 'data-act="close"' : `data-act="pvedit" data-t="${x.t}" data-id="${x.id}"`} style="--c:${x.t === 'inc' ? '#4cc9a6' : x.t === 'hh' ? 'var(--rose)' : pcol(PV.cats, x.cat)}"><span class="dot"></span>
+    <span><div class="t">${x.t === 'hh' ? '🏠 ' : ''}${esc(x.t === 'inc' ? x.src : x.cat)}${x.rec ? ' <span class="faint small">↻</span>' : ''}</div><div class="s">${ds(pk(x.date))}${x.mode ? ' · ' + esc(x.mode) : ''}${x.note ? ' · ' + esc(x.note) : ''}${x.t === 'hh' ? ' · shared' : ''}</div></span>
+    <span class="a ${x.t === 'inc' ? 'inc' : 'exp'}">${x.t === 'inc' ? '+' : '−'}${rs(x.amount)}</span></button>`).join('') : '<div class="muted small">Nothing this month yet.</div>'}</div>`;
+}
+function pvTools(){
+  return `<div class="card noprint"><h3>My money tools</h3>
+    <label class="tg"><span>Count household spends I add<div class="small muted">Shared expenses with "added by ${esc(S.me || 'me')}"</div></span><span class="sw"><input type="checkbox" id="pvHH" ${PV.household ? 'checked' : ''}><span></span></span></label>
+    ${PV.rec.length ? `<div class="fl" style="margin-top:12px">↻ Monthly entries</div>${PV.rec.map(r => `<div class="brow"><span><b>${esc(r.type === 'inc' ? r.src : r.cat)} · ${rs(r.amount)}</b><div class="small muted">${r.type === 'inc' ? 'Income' : 'Expense'} · day ${r.day}</div></span><button class="btn sm danger" data-act="pvrecdel" data-id="${r.id}">Stop</button></div>`).join('')}` : ''}
+    <div style="height:12px"></div>
+    <div class="grid2"><button class="btn" data-act="pvexp">⬇ Backup (.json)</button><button class="btn" data-act="pvcsv">⬇ Excel (CSV)</button></div>
+    <div class="grid2"><button class="btn" data-act="impall">Restore backup</button><button class="btn" data-act="pvlock">🔒 Lock now</button></div>
+    <div class="grid2"><button class="btn" data-act="pvchpin">Change PIN</button>${PLK.cred ? `<button class="btn" data-act="pvbiooff">Fingerprint off</button>` : `<button class="btn" data-act="pvbioon">Fingerprint on</button>`}</div>
+    <button class="btn danger" data-act="pvwipe">Delete My money from this phone</button>
+    <p class="small faint">My money lives only on this phone, behind its own PIN. It is never sent to the shared database, so your wife's phone can't see it. It locks whenever you leave this tab or the app. Back it up regularly.</p></div>`;
+}
+function sheetPv(t, x){
+  x = x || {}; const isInc = t === 'inc', list = isInc ? PV.src : PV.cats, cur = isInc ? x.src : x.cat;
+  UI.PF = {t, id:x.id || null, sel:cur || ''};
+  sheet(`<h3>${x.id ? 'Edit' : 'Add'} ${isInc ? 'income' : 'private expense'}</h3>
+    <div class="fl">Amount</div><div class="amt"><span>₹</span><input id="pvAmt" inputmode="decimal" value="${x.amount || ''}" placeholder="0"></div>
+    <div class="fl" style="margin-top:12px">${isInc ? 'Source' : 'Category'}</div>
+    <div class="chips" id="pvChips">${list.map(v => `<button class="chip${v === cur ? ' on' : ''}" style="--c:${pcol(list, v)}" data-act="pvsel" data-v="${esc(v)}">${esc(v)}</button>`).join('')}<button class="chip" data-act="pvnew">＋ New</button></div>
+    <div class="grid2" style="margin-top:12px"><div><div class="fl">Date</div><input type="date" id="pvDate" value="${x.date || today()}"></div><div><div class="fl">${isInc ? 'Note' : 'Paid by'}</div><input id="pvMode" value="${esc(isInc ? (x.note || '') : (x.mode || ''))}" placeholder="${isInc ? 'optional' : 'e.g. Card'}"></div></div>
+    ${isInc ? '' : `<div class="fl">Note</div><input id="pvNote" value="${esc(x.note || '')}" placeholder="optional">`}
+    ${x.id ? '' : `<label class="tg" style="border:0"><span>↻ Repeat every month on this date</span><span class="sw"><input type="checkbox" id="pvRec"><span></span></span></label>`}
+    <div style="height:8px"></div><button class="btn main" data-act="pvsave">${x.id ? 'Save changes' : 'Save'}</button>
+    ${x.id ? `<div style="height:8px"></div><button class="btn danger" data-act="pvdel">Delete</button>` : ''}`);
+}
+
 const A = {
+  ppin: el => ppin(el.dataset.v),
+  pmnav: el => { UI.pm = Math.min(0, (UI.pm || 0) + +el.dataset.v); snd('tap'); render(true); },
+  pvadd: el => sheetPv(el.dataset.t),
+  pvedit: el => { const t = el.dataset.t, x = (t === 'inc' ? PV.income : PV.exp).find(y => y.id === el.dataset.id); if (x) sheetPv(t, x); },
+  pvsel: el => { UI.PF.sel = el.dataset.v; document.querySelectorAll('#pvChips .chip').forEach(b => b.classList.toggle('on', b === el)); snd('tap'); },
+  pvnew: () => { const v = (prompt(UI.PF.t === 'inc' ? 'New income source' : 'New category') || '').trim().slice(0, 24); if (!v) return;
+    const list = UI.PF.t === 'inc' ? PV.src : PV.cats; if (!list.includes(v)) list.push(v); savePV(); UI.PF.sel = v;
+    $('pvChips').innerHTML = list.map(x => `<button class="chip${x === v ? ' on' : ''}" style="--c:${pcol(list, x)}" data-act="pvsel" data-v="${esc(x)}">${esc(x)}</button>`).join('') + '<button class="chip" data-act="pvnew">＋ New</button>'; },
+  pvsave: () => { const F2 = UI.PF, amt = parseFloat(String($('pvAmt').value).replace(/,/g, '')); if (!(amt > 0)) return toast('Enter the amount'); if (!F2.sel) return toast(F2.t === 'inc' ? 'Pick a source' : 'Pick a category');
+    const date = $('pvDate').value || today(), isInc = F2.t === 'inc', id = F2.id || 'p' + Date.now().toString(36);
+    const rec = isInc ? {id, date, amount:amt, src:F2.sel, note:$('pvMode').value.trim()} : {id, date, amount:amt, cat:F2.sel, mode:$('pvMode').value.trim(), note:$('pvNote').value.trim()};
+    const arr = isInc ? 'income' : 'exp'; const old = PV[arr].find(y => y.id === id); if (old && old.rec) rec.rec = old.rec;
+    PV[arr] = PV[arr].filter(y => y.id !== id).concat(rec);
+    const rc = $('pvRec'); if (rc && rc.checked) { const rid = 'r' + Date.now().toString(36); PV.rec.push({id:rid, type:F2.t, src:rec.src, cat:rec.cat, amount:amt, day:+date.slice(8, 10), mode:rec.mode, note:'↻ monthly'}); rec.rec = rid; (PV.recDone[rid] = PV.recDone[rid] || []).push(date.slice(0, 7)); }
+    savePV(); closeSheet(); snd(isInc ? 'income' : 'save'); render(true); toast(`${isInc ? '+' : '−'}${rs(amt)} · ${F2.sel}`); },
+  pvdel: () => { if (!confirm('Delete this entry?')) return; const arr = UI.PF.t === 'inc' ? 'income' : 'exp'; PV[arr] = PV[arr].filter(y => y.id !== UI.PF.id); savePV(); closeSheet(); snd('del'); render(); toast('Deleted'); },
+  pvrecdel: el => { if (!confirm('Stop this monthly entry? Past entries stay.')) return; PV.rec = PV.rec.filter(r => r.id !== el.dataset.id); savePV(); snd('del'); render(); },
+  pvexp: () => { dl(`my-money-backup-${today()}.json`, JSON.stringify({app:'Home Sweet Home', kind:'private', exported:new Date().toISOString(), ...PV}, null, 1), 'application/json'); toast('Private backup saved. Keep it somewhere safe.'); },
+  pvcsv: () => { const q = v => { const s = String(v ?? ''); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const rows = [...PV.income.map(x => [x.date, 'Income', x.src, x.amount, '', x.note]), ...PV.exp.map(x => [x.date, 'Expense', x.cat, -x.amount, x.mode, x.note])].sort((a,b) => a[0] < b[0] ? -1 : 1);
+    dl(`my-money-${today()}.csv`, '﻿' + [['Date','Type','Source / category','Amount','Paid by','Note'], ...rows].map(r => r.map(q).join(',')).join('\r\n'), 'text/csv'); },
+  pvlock: () => { PL.open = false; snd('tap'); render(true); },
+  pvchpin: () => { PL.open = false; PL.mode = 'change1'; PL.buf = ''; render(true); },
+  pvbioon: async () => { try { await bioRegister(); closeSheet(); snd('save'); toast('Fingerprint unlock is on for My money'); render(); } catch(e) { toast('Fingerprint setup was cancelled or isn\'t available here'); } },
+  pvbiooff: () => { PLK.cred = null; savePLK(); render(); toast('Fingerprint off. Your PIN still works.'); },
+  pvwipe: () => { if (!confirm('Delete all My money data and its PIN from this phone? Export a backup first if you need it.')) return; if (!confirm('Really delete? This cannot be undone.')) return;
+    ls.del('priv'); ls.del('privlock'); PV = null; PLK = {pinHash:null, salt:null, cred:null}; PL.open = false; UI.tab = 'home'; render(true); toast('My money removed from this phone'); },
   pickopen: el => openPicker(el.dataset.k),
   pkchoose: el => pkChoose(el.dataset.v),
   pkfav: el => { const k = PK.kind, v = el.dataset.v, a = PR.fav[k], i = a.indexOf(v); if (i >= 0) a.splice(i, 1); else a.push(v); savePR(); pkRefresh(); toast(i >= 0 ? `${v} removed from favourites` : `★ ${v} pinned to the top`); },
@@ -644,7 +1073,7 @@ const A = {
   pktoghid: () => { PK.showHid = !PK.showHid; pkRefresh(); },
   pkfocus: () => { const q = $('pkQ'); if (q) q.focus(); },
   pkadd: () => { const v = addVal(PK.kind, PK.q); if (v) pkChoose(v); },
-  tab: el => { readForm(); UI.tab = el.dataset.t; UI.slice = null; render(); scrollTo(0,0); },
+  tab: el => { readForm(); if (UI.tab === el.dataset.t) return; if (UI.tab === 'me') PL.open = false; UI.tab = el.dataset.t; UI.slice = null; snd('tab'); render(true); scrollTo(0,0); },
   refresh: () => load(false).then(() => !S.err && toast('Up to date')),
   connect: async () => {
     const name = $('suName').value.trim(), key = $('suKey').value.trim();
@@ -659,7 +1088,7 @@ const A = {
       toast(e.status === 401 || e.status === 403 || e.code === '42501' ? 'That secret word does not match' : 'Could not connect: ' + e.message);
     }
   },
-  kind: el => { readForm(); F.kind = el.dataset.k; render(); },
+  kind: el => { readForm(); F.kind = el.dataset.k; snd('tap'); render(); },
   save: async () => {
     readForm();
     const amt = parseFloat(String(F.amount).replace(/,/g,''));
@@ -668,8 +1097,8 @@ const A = {
     const btn = document.querySelector('[data-act=save]'); if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
     try {
       if (F.id) { const r = await api('expenses?id=eq.' + F.id, {method:'PATCH', body: JSON.stringify(body)}); S.rows = S.rows.map(x => x.id === F.id ? r[0] : x); toast('Updated'); }
-      else { const r = await api('expenses', {method:'POST', body: JSON.stringify({...body, added_by: S.me})}); S.rows.unshift(r[0]); toast(`Added ${F.item} · ${rs(amt)}`); }
-      if (navigator.vibrate) navigator.vibrate(20);
+      else { const r = await api('expenses', {method:'POST', body: JSON.stringify({...body, added_by: S.me})}); S.rows.unshift(r[0]); UI.flash = r[0].id; toast(`Added ${F.item} · ${rs(amt)}`); }
+      snd('save'); if (navigator.vibrate) navigator.vibrate(20); budgetAlert();
       const keep = {kind: F.kind, person: F.person}; F = {...blankForm(), ...keep}; ls.set('draft', F); ls.set('cache', S.rows); render();
     } catch(e) { toast('Not saved: ' + e.message); if (btn) { btn.disabled = false; btn.textContent = F.id ? 'Update expense' : 'Add expense'; } }
   },
@@ -681,26 +1110,52 @@ const A = {
     UI.tab = 'home'; render(); $('formCard').scrollIntoView({behavior:'smooth', block:'start'}); setTimeout(() => { const a = $('fAmt'); a.focus(); a.select(); }, 350); },
   cancelEdit: () => { F = blankForm(); render(); },
   del: async el => { if (!confirm('Delete this expense for both of you?')) return;
-    try { await api('expenses?id=eq.' + el.dataset.id, {method:'DELETE'}); S.rows = S.rows.filter(x => x.id != el.dataset.id); F = blankForm(); ls.set('cache', S.rows); render(); toast('Deleted'); }
+    try { await api('expenses?id=eq.' + el.dataset.id, {method:'DELETE'}); snd('del'); const row = document.querySelector(`.ent[data-rid="${el.dataset.id}"]`); if (row) { row.classList.add('out'); await new Promise(r => setTimeout(r, 280)); }
+      S.rows = S.rows.filter(x => x.id != el.dataset.id); F = blankForm(); ls.set('cache', S.rows); render(); toast('Deleted'); }
     catch(e) { toast('Not deleted: ' + e.message); } },
   shareday: el => share(dayText(el.dataset.d)),
   sharemonth: el => share(monthText(el.dataset.a, el.dataset.b)),
   csv: el => csv(el.dataset.a, el.dataset.b),
   print: () => window.print(),
-  calnav: el => { UI.calM = new Date(UI.calM.getFullYear(), UI.calM.getMonth() + +el.dataset.v, 1); UI.calSel = null; render(); },
+  calnav: el => { UI.calM = new Date(UI.calM.getFullYear(), UI.calM.getMonth() + +el.dataset.v, 1); UI.calSel = null; snd('tap'); render(true); },
   calday: el => { UI.calSel = UI.calSel === el.dataset.d ? null : el.dataset.d; render(); },
-  amode: el => { UI.aMode = el.dataset.m; UI.aOff = 0; UI.slice = null; render(); },
-  akind: el => { UI.aKind = el.dataset.k; UI.slice = null; render(); },
-  anav: el => { UI.aOff = Math.min(0, UI.aOff + +el.dataset.v); UI.slice = null; render(); },
-  rnav: el => { UI.rOff = Math.min(0, UI.rOff + +el.dataset.v); render(); },
-  slice: el => { const i = +el.dataset.i; UI.slice = UI.slice === i ? null : i; render(); },
+  amode: el => { UI.aMode = el.dataset.m; UI.aOff = 0; UI.slice = null; snd('tap'); render(true); },
+  akind: el => { UI.aKind = el.dataset.k; UI.slice = null; snd('tap'); render(true); },
+  anav: el => { UI.aOff = Math.min(0, UI.aOff + +el.dataset.v); UI.slice = null; snd('tap'); render(true); },
+  rnav: el => { UI.rOff = Math.min(0, UI.rOff + +el.dataset.v); snd('tap'); render(true); },
+  slice: el => { const i = +el.dataset.i; UI.slice = UI.slice === i ? null : i; snd('tap'); render(); },
   settings: () => sheet(`<h3>Settings</h3>
     <div class="fl">Your name on this phone</div><input id="stName" value="${esc(S.me)}">
     <div style="height:10px"></div><button class="btn main" data-act="savename">Save name</button>
+    <div class="tg" style="margin-top:12px"><div><b>Sound effects</b><div class="small muted">Chimes on add, delete and taps</div></div><label class="sw"><input type="checkbox" id="sndT" ${SET.sound ? 'checked' : ''}><span></span></label></div>
+    <div style="height:10px"></div>
+    <button class="btn" data-act="budgets">💰 Monthly budgets</button><div style="height:8px"></div>
+    <button class="btn" data-act="bills">↻ Recurring bills</button><div style="height:8px"></div>
+    <button class="btn" data-act="backup">⬇ Backup & export</button><div style="height:8px"></div>
+    ${PV ? '' : `<button class="btn" data-act="pvenable">🔒 Set up My money (private, this phone only)</button>`}
     <p class="small muted" style="margin-top:18px"><b>App icon:</b> to use your own photo, make it square, save it as <b>icon-512.png</b> (and a copy as <b>icon-192.png</b>), upload both to your GitHub repository to replace the originals, then remove and re-add the app to your home screen.</p>
     <p class="small muted"><b>Sharing:</b> your spouse opens the same link, installs it, and enters the same family secret word.</p>
     <button class="btn danger" data-act="logout">Disconnect this phone</button>
     <p class="small faint">Disconnecting removes the secret word from this phone only. No expenses are deleted.</p>`),
+  budgets: () => sheetBudgets(),
+  savebud: () => { const g = parseFloat($('bGen').value) || 0; BUD.gen = g; BUD.items = {};
+    document.querySelectorAll('[data-bi]').forEach(r => { const n = r.querySelector('.bn').value.trim(), a = parseFloat(r.querySelector('.ba').value) || 0; if (n && a > 0) BUD.items[n] = a; });
+    ls.set('budget', BUD); snd('save'); closeSheet(); render(true); toast('Budgets saved'); },
+  addbudrow: () => { const d = document.createElement('div'); d.className = 'grid2'; d.dataset.bi = '1'; d.innerHTML = `<input class="bn" placeholder="Item, e.g. Groceries" list="itemList"><input class="ba" inputmode="numeric" placeholder="₹ per month">`; $('budItems').appendChild(d); },
+  bills: () => sheetBills(),
+  billadd: () => sheetBillForm({}),
+  billedit: el => sheetBillForm(BILLS.find(b => b.id === el.dataset.id) || {}),
+  billsave: () => { const it = $('blItem').value.trim(), pe = $('blWho').value.trim() || S.me, am = parseFloat($('blAmt').value), dy = Math.min(31, Math.max(1, parseInt($('blDay').value, 10) || 1)), mo = $('blMode').value.trim() || 'Net Banking';
+    if (!it) return toast('Enter what the bill is'); if (!(am > 0)) return toast('Enter the amount');
+    const id = $('blId').value || 'b' + Date.now().toString(36), rec = {id, item:it, person:pe, amount:am, day:dy, mode:mo, kind:$('blSpc').checked ? 'special' : 'general', skip:(BILLS.find(b => b.id === id) || {}).skip || []};
+    BILLS = BILLS.filter(b => b.id !== id).concat(rec); ls.set('bills', BILLS); snd('save'); sheetBills(); autoBills(); toast(`↻ ${it} set for day ${dy} every month`); },
+  billdel: el => { if (!confirm('Delete this recurring bill? Past entries stay.')) return; BILLS = BILLS.filter(b => b.id !== el.dataset.id); ls.set('bills', BILLS); snd('del'); sheetBills(); render(); },
+  billskip: el => { const b = BILLS.find(x => x.id === el.dataset.id), mk = today().slice(0,7); b.skip = b.skip || []; const i = b.skip.indexOf(mk); if (i >= 0) b.skip.splice(i, 1); else b.skip.push(mk); ls.set('bills', BILLS); snd('tap'); sheetBills(); render(); },
+  backup: () => sheetBackup(),
+  expall: () => { const data = {app:'Home Sweet Home', kind:'backup', exported:new Date().toISOString(), expenses:S.rows, phone:{me:S.me, extra:S.extra, prefs:PR, budget:BUD, bills:BILLS, settings:SET}};
+    dl(`home-sweet-home-backup-${today()}.json`, JSON.stringify(data, null, 1), 'application/json'); toast(`Backup saved · ${S.rows.length} expenses`); },
+  impall: () => $('impFile').click(),
+  pvenable: () => { PV = pvFresh(); savePV(); closeSheet(); UI.tab = 'me'; render(true); },
   savename: () => { const v = $('stName').value.trim(); if (!v) return; S.me = v; ls.set('me', v); closeSheet(); render(); toast('Saved'); },
   logout: () => { if (!confirm('Disconnect this phone? You will need the secret word again.')) return; S.secret = null; ls.del('secret'); closeSheet(); render(); },
   close: () => closeSheet(),
@@ -709,18 +1164,21 @@ const A = {
 document.addEventListener('click', e => { const el = e.target.closest('[data-act]'); if (el && A[el.dataset.act]) A[el.dataset.act](el); });
 document.addEventListener('change', e => {
   const id = e.target.id, v = e.target.value;
+  if (id === 'sndT') { SET.sound = e.target.checked; ls.set('settings', SET); snd('tap'); return; }
+  if (id === 'pvHH') { PV.household = e.target.checked; savePV(); render(); return; }
   const pick = (field, kind) => { readForm(); if (v === '__new') { const n = addNew(kind); if (n) F[field] = n; } else F[field] = v; if (field === 'person' && !itemsFor(F.person).mine.concat(itemsFor(F.person).other).includes(F.item)) F.item = ''; ls.set('draft', F); render(); };
   if (id === 'fMode') pick('mode', 'mode');
   if (id === 'fDate') readForm();
 });
 document.addEventListener('input', e => { if (/^f(Amt|Note)$/.test(e.target.id)) readForm(); if (e.target.id === 'pkQ') { PK.q = e.target.value; pkRefresh(); } });
-document.addEventListener('keydown', e => { if (e.target.id === 'pkQ' && e.key === 'Enter') { e.preventDefault(); const first = document.querySelector('#pkList [data-act=pkchoose]'), typed = PK.q.trim();
+document.addEventListener('keydown', e => { if (UI.tab === 'me' && !PL.open && document.querySelector('.pv-lock') && !typing()) { if (/^\d$/.test(e.key)) return ppin(e.key); if (e.key === 'Backspace') return ppin('del'); }
+  if (e.target.id === 'pkQ' && e.key === 'Enter') { e.preventDefault(); const first = document.querySelector('#pkList [data-act=pkchoose]'), typed = PK.q.trim();
   if (typed && first) pkChoose(first.dataset.v); else if (typed) A.pkadd(); } });
 document.addEventListener('focusout', () => setTimeout(() => { if (dirtyWhileTyping && !typing()) { dirtyWhileTyping = false; readForm(); render(); } }, 50));
 document.addEventListener('visibilitychange', () => { if (!document.hidden) load(true); });
 setInterval(() => { if (!document.hidden) load(true); }, 20000);
 
-render();
+render(true);
 load(true);
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
 })();
